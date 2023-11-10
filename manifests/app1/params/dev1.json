@@ -18,7 +18,7 @@
       "value": "acryonetest"
     },
     "image": {
-      "value": "acryonetest.azurecr.io/helloworld"
+      "value": "1c31984"
     },
     "imageTag": {
       "value": "latest"
