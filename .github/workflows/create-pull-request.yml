@@ -1,0 +1,18 @@
+name: Create pull request
+on:
+  repository_dispatch:
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Create pull request
+        run: |
+          gh pr create \
+            --base main \
+            --head dev \
+            --title "test" \
+            --body ""
+          
