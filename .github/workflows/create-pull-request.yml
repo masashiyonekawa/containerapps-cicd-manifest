@@ -17,27 +17,25 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Set current datetime
-        env:
-          TZ: "Asia/Tokyo"
-        run: echo "CURRENT_DATE=$(date + '%Y%m%d')" >> $GITHUB_ENV
+      - name: Set head branch
+        run: |
+          echo "head_branch=$(ci-${{ github.event.client_payload.sha_short }})" >> $GITHUB_ENV
 
       - name: Push
         run: |
-          echo "HEAD_BRANCH=$(ci-${{ env.CURRENT_DATE }}-${{ github.event.client_payload.sha_short }})" >> $GITHUB_ENV
           git remote set-url origin https://github-actions:${{ env.GH_TOKEN }}@github.com/${{ github.repository }}
           git config user.email ${{ env.GITHUB_MAIL }}
           git config user.name ${{ env.GITHUB_NAME }}
           echo "Hello GitHub Actions!" >> hello.txt
           git add .
           git commit -m "generated"
-          git push origin ${{ env.HEAD_BRANCH }}
+          git push origin ${{ env.head_branch }}
 
       - name: Create pull request
         run: |
           gh pr create \
             --base main \
-            --head ${{ env.HEAD_BRANCH }} \
+            --head ${{ env.head_branch }} \
             --title "test" \
             --body ""
           
