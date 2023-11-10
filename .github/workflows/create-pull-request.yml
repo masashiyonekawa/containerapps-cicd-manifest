@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
       GITHUB_NAME: github-actions[bot]
 
