@@ -32,12 +32,13 @@ jobs:
           git switch -c ${{ env.head_branch }}
           git push -u origin ${{ env.head_branch }}
 
-      - name: Push
+      - name: Update container image
         run: |
           git remote set-url origin https://github-actions:${{ env.GH_TOKEN }}@github.com/${{ github.repository }}
           git config user.email ${{ env.GITHUB_MAIL }}
           git config user.name ${{ env.GITHUB_NAME }}
-          echo "Hello GitHub Actions!" >> hello.txt
+          cd manifests/app1/params
+          jq '.parameters.image.value="${{ github.event.client_payload.sha_short }}"' dev1.json > tmp && mv tmp dev1.json
           git add .
           git commit -m "generated"
           git push origin ${{ env.head_branch }}
@@ -48,5 +49,5 @@ jobs:
             --base main \
             --head ${{ env.head_branch }} \
             --title "test" \
-            --body ""
+            --fill
           
