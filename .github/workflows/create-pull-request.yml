@@ -40,7 +40,7 @@ jobs:
           cd manifests/app1/params
           jq '.parameters.image.value="${{ github.event.client_payload.sha_short }}"' dev1.json > tmp && mv tmp dev1.json
           git add .
-          git commit -m "generated"
+          git commit -m "Update container image to ${{ github.event.client_payload.sha_short }}"
           git push origin ${{ env.head_branch }}
 
       - name: Create pull request
@@ -48,6 +48,6 @@ jobs:
           gh pr create \
             --base main \
             --head ${{ env.head_branch }} \
-            --title "test" \
+            --title "Update container image to ${{ github.event.client_payload.sha_short }}" \
             --fill
           
