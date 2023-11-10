@@ -15,11 +15,16 @@ jobs:
       GITHUB_NAME: github-actions[bot]
 
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v4
 
-      - name: Set head branch
+      - name: Set head branch name
         run: |
           echo "head_branch=ci-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
+
+      - name: Create new branch
+        run: |
+          git switch -c ${{ env.head_branch }}
+          git push -u origin ${{ env.head_branch }}
 
       - name: Push
         run: |
