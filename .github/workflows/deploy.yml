@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: deploy
+        uses: azure/arm-deploy@v1
+        with:
+          scope: subscription
+          region: japaneast
+          template: manifests/app1/main.bicep
+          parameters: manifests/app1/params/dev1.bicepparam
+          failOnStdErr: true
