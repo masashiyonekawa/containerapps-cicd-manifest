@@ -21,7 +21,7 @@ jobs:
         env:
           TZ: 'Asia/Tokyo'
         run: |
-          echo "current_datetime=$(date + '%Y%m%d%H%M%S')" >> $GITHUB_ENV
+          echo "current_datetime=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Set head branch name
         run: |
