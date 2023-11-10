@@ -5,6 +5,10 @@ on:
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
     steps:
       - uses: actions/checkout@main
 
