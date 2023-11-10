@@ -18,10 +18,10 @@
       "value": "acryonetest"
     },
     "image": {
-      "value": "1c31984"
+      "value": "acryonetest.azurecr.io/helloworld"
     },
     "imageTag": {
-      "value": "latest"
+      "value": "1c31984"
     },
     "containerName": {
       "value": "helloworld-container"
