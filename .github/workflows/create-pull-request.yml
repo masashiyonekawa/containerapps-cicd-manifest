@@ -19,7 +19,7 @@ jobs:
 
       - name: Set head branch
         run: |
-          echo "head_branch=$(ci-${{ github.event.client_payload.sha_short }})" >> $GITHUB_ENV
+          echo "head_branch=ci-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
 
       - name: Push
         run: |
