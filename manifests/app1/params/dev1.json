@@ -18,7 +18,7 @@
       "value": "acryonetest"
     },
     "image": {
-      "value": "acryonetest.azurecr.io/helloworld:latest"
+      "value": "1234567"
     },
     "containerName": {
       "value": "helloworld-container"
