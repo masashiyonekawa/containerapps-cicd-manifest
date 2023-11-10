@@ -17,9 +17,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set current datetime
+        env:
+          TZ: 'Asia/Tokyo'
+        run: |
+          echo "current_datetime=$(date + '%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
       - name: Set head branch name
         run: |
-          echo "head_branch=ci-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
+          echo "head_branch=ci-${{ github.event.client_payload.sha_short }}-${{ env.current_datetime }}" >> $GITHUB_ENV
 
       - name: Create new branch
         run: |
