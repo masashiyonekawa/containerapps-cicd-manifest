@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "rg-yone-containerapps-cicd"
+    },
+    "name": {
+      "value": "ca-yone-containerapps-cicd"
+    },
+    "userAssignedManagedIdentityId": {
+      "value": "/subscriptions/6b5a0a79-da53-4c9f-92db-40a73a4a68d3/resourcegroups/rg-yone-containerapps-cicd/providers/microsoft.managedidentity/userassignedidentities/id-yone-containerapps-cicd"
+    },
+    "environmentId": {
+      "value": "/subscriptions/6b5a0a79-da53-4c9f-92db-40a73a4a68d3/resourceGroups/rg-yone-containerapps-cicd/providers/Microsoft.App/managedEnvironments/cae-yone-containerapps-cicd"
+    },
+    "acrName": {
+      "value": "acryonetest"
+    },
+    "image": {
+      "value": "acryonetest.azurecr.io/helloworld:latest"
+    },
+    "containerName": {
+      "value": "helloworld-container"
+    },
+    "cpu": {
+      "value": "0.25"
+    },
+    "memory": {
+      "value": "0.5Gi"
+    }
+  }
+}

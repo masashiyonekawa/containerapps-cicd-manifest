@@ -26,5 +26,5 @@ jobs:
           scope: subscription
           region: japaneast
           template: manifests/app1/main.bicep
-          parameters: manifests/app1/params/dev1.bicepparam
+          parameters: manifests/app1/params/dev1.json
           failOnStdErr: true
