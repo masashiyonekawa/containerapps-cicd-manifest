@@ -39,7 +39,7 @@ jobs:
           git config user.name ${{ env.GITHUB_NAME }}
           cd manifests/app1
           IMAGE_NAME=`yq -r '.properties.template.containers[0].image' dev1.yml | awk -F ":" '{print $1}'`
-          yq -r '.properties.template.containers[0].image|="$IMAGE_NAME:${{ github.event.client_payload.sha_short }}"' dev1.yml > tmp && mv tmp dev1.yml
+          yq -ry '.properties.template.containers[0].image|="$IMAGE_NAME:${{ github.event.client_payload.sha_short }}"' dev1.yml > tmp && mv tmp dev1.yml
           git add .
           git commit -m "Update container image to ${{ github.event.client_payload.sha_short }}"
           git push origin ${{ env.head_branch }}

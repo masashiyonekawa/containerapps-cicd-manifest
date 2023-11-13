@@ -1,25 +1,15 @@
-{
-  "location": "japaneast",
-  "name": "ca-yone-containerapps-cicd",
-  "resourceGroup": "rg-yone-containerapps-cicd",
-  "type": "Microsoft.App/containerApp",
-  "properties": {
-    "template": {
-      "revisionSuffix": "myrevision",
-      "containers": [
-        {
-          "image": "acryonetest.azurecr.io/helloworld:1c31984",
-          "name": "helloworld-container",
-          "resources": {
-            "cpu": 0.5,
-            "memory": "1Gi"
-          }
-        }
-      ],
-      "scale": {
-        "minReplicas": 1,
-        "maxReplicas": 3
-      }
-    }
-  }
-}
+name: ca-yone-containerapps-cicd
+resourceGroup: rg-yone-containerapps-cicd
+type: Microsoft.App/containerApp
+properties:
+  template:
+    revisionSuffix: myrevision
+    containers:
+      - image: acryonetest.azurecr.io/helloworld:1c31984
+        name: helloworld-container
+        resources:
+          cpu: 0.5
+          memory: 1Gi
+    scale:
+      minReplicas: 1
+      maxReplicas: 3
