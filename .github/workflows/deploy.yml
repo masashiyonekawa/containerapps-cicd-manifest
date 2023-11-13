@@ -20,11 +20,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: deploy
-        uses: azure/arm-deploy@v1
+      - name: az containerapp update
+        uses: azure/CLI@v1
         with:
-          scope: subscription
-          region: japaneast
-          template: manifests/app1/main.bicep
-          parameters: manifests/app1/params/dev1.json
-          failOnStdErr: true
+          inlineScript: |
+            az containerapp update \
+              --resource-group rg-yone-containerapps-cicd \
+              --name ca-yone-containerapps-cicd \
+              --yaml manifests/app1/params/dev1.yml
