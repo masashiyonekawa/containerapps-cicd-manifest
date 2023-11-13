@@ -1,6 +1,6 @@
 name: ca-yone-containerapps-cicd
 resourceGroup: rg-yone-containerapps-cicd
-type: Microsoft.App/containerApp
+type: Microsoft.App/containerApps
 properties:
   template:
     revisionSuffix: myrevision
