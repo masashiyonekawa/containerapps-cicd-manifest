@@ -27,4 +27,4 @@ jobs:
             az containerapp update \
               --resource-group rg-yone-containerapps-cicd \
               --name ca-yone-containerapps-cicd \
-              --yaml manifests/app1/params/dev1.yml
+              --yaml manifests/app1/dev1.yml
