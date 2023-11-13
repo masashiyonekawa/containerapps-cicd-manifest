@@ -3,7 +3,6 @@ resourceGroup: rg-yone-containerapps-cicd
 type: Microsoft.App/containerApps
 properties:
   template:
-    revisionSuffix: myrevision
     containers:
       - image: acryonetest.azurecr.io/helloworld:1c31984
         name: helloworld-container
