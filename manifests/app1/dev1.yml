@@ -1,5 +1,3 @@
-name: ca-yone-containerapps-cicd
-resourceGroup: rg-yone-containerapps-cicd
 type: Microsoft.App/containerApps
 properties:
   template:
