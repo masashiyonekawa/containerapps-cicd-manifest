@@ -30,7 +30,7 @@ jobs:
 
       - name: Set env image name
         run: |
-          echo "image_name=$(yq -r '.properties.template.containers[0].image' dev1.yml | awk -F ':' '{print $1}')" >> $GITHUB_ENV
+          echo "image_name=$(yq -r '.properties.template.containers[0].image' manifests/app1/dev1.yml | awk -F ':' '{print $1}')" >> $GITHUB_ENV
 
       - name: Create new branch
         run: |
