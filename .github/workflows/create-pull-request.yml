@@ -62,9 +62,9 @@ jobs:
 
       - name: Create pull request
         run: |
-          gh pr create \
-            --base main \
-            --head ${{ env.head_branch }} \
-            --title "Update ${{ matrix.value }} container image to ${{ github.event.client_payload.sha_short }}" \
-            --fill
-          
+          echo pr_url=$(gh pr create --base main --head ${{ env.head_branch }} --title "Update ${{ matrix.value }} container image to ${{ github.event.client_payload.sha_short }}" --fill) >> $GITHUB_ENV
+
+      - name: Merge pull request (only dev)
+        if: ${{ startsWith(matrix.value, 'dev') }}
+        run: |
+          gh pr merge --merge --auto ${{ env.pr_url }}
