@@ -37,12 +37,12 @@ jobs:
       - name: Set env head branch (dev)
         if: ${{ startsWith(matrix.value, 'dev') }}
         run: |
-          echo "head_branch=dev/${{ matrix.value }}-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
+          echo "head_branch=dev/${{ matrix.value }}/${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
 
       - name: Set env head branch (release)
         if: ${{ !startsWith(matrix.value, 'dev') }}
         run: |
-          echo "head_branch=release/${{ matrix.value }}-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
+          echo "head_branch=release/${{ matrix.value }}/${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
 
       - name: Create new branch
         run: |
