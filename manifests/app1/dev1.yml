@@ -2,7 +2,7 @@ type: Microsoft.App/containerApps
 properties:
   template:
     containers:
-      - image: acryonetest.azurecr.io/helloworld:1c31984
+      - image: acryonetest.azurecr.io/helloworld:1234567
         name: helloworld-container
         resources:
           cpu: 0.5
