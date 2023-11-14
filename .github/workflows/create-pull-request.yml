@@ -26,6 +26,7 @@ jobs:
         value: ${{ fromJson(needs.get_env_matrix.outputs.matrix) }}
 
     env:
+      GH_TOKEN: ${{ github.token }}
       GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
       GITHUB_NAME: github-actions[bot]
 
