@@ -21,7 +21,7 @@ jobs:
           - uses: winterjung/split@v2
             id: split
             with:
-              msg: ${{ github.ref_name }}
+              msg: ${{ github.head_ref }}
               separator: /
 
           - id: set_outputs
@@ -34,7 +34,7 @@ jobs:
     needs: set_environment
     environment: ${{ needs.set_environment.outputs.env_name }}
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v4
 
       - uses: azure/login@v1
         with:
