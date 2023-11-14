@@ -21,15 +21,16 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: az containerapp show
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az containerapp show \
-              --resource-group rg-yone-containerapps-cicd \
-              --name ca-yone-containerapps-cicd \
-              --query properties.configuration.ingress.fqdn
+      - name: test1
+        id: test1
+        run: |
+          h=$(az containerapp show \
+            --resource-group rg-yone-containerapps-cicd \
+            --name ca-yone-containerapps-cicd \
+            --query properties.configuration.ingress.fqdn
+          )
+          echo env_fqdn=$h >> $GITHUB_OUTPUT
 
-      - name: Set environment FQDN
-        id: set_env_fqdn
-        run: echo env_fqdn="" >> $GITHUB_OUTPUT
+      - name: test2
+        run: |
+          echo "${{ steps.test1.outputs.env_fqdn }}"
