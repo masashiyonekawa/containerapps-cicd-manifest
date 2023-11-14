@@ -26,7 +26,7 @@ jobs:
     needs: get_env_matrix
     strategy:
       matrix:
-        value: ${{ fromJson(needs.get_pr_matrix.outputs.matrix) }}
+        value: ${{ fromJson(needs.get_env_matrix.outputs.matrix) }}
     steps:
       - name: Processing for each environment
         run: |
