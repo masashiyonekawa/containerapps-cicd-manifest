@@ -7,30 +7,40 @@ permissions:
   contents: write
 
 jobs:
+  get_env_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.environments }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: matrix
+        run: |
+          env_list=$(curl --location https://api.github.com/repos/${{ github.repository }}/environments --header 'Authorization: Bearer ${{ secrets.GH_TOKEN }}' | jq -r '[.environments[].name]')
+          echo environments=$(echo $env_list | jq -c .) >> $GITHUB_OUTPUT
+
   create-pull-request:
     runs-on: ubuntu-latest
+    needs: get_env_matrix
+    strategy:
+      matrix:
+        value: ${{ fromJson(needs.get_env_matrix.outputs.matrix) }}
 
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
       GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
       GITHUB_NAME: github-actions[bot]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set env current datetime
-        env:
-          TZ: 'Asia/Tokyo'
+      - name: Set env head branch (dev)
+        if: ${{ startsWith(matrix.value, 'dev') }}
         run: |
-          echo "current_datetime=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+          echo "head_branch=dev/${{ matrix.value }}-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
 
-      - name: Set env head branch
+      - name: Set env head branch (release)
+        if: ${{ !startsWith(matrix.value, 'dev') }}
         run: |
-          echo "head_branch=ci-${{ github.event.client_payload.sha_short }}-${{ env.current_datetime }}" >> $GITHUB_ENV
-
-      - name: Set env image name
-        run: |
-          echo "image_name=$(yq -r '.properties.template.containers[0].image' manifests/app1/dev1.yml | awk -F ':' '{print $1}')" >> $GITHUB_ENV
+          echo "head_branch=release/${{ matrix.value }}-${{ github.event.client_payload.sha_short }}" >> $GITHUB_ENV
 
       - name: Create new branch
         run: |
@@ -39,11 +49,11 @@ jobs:
 
       - name: Update container image
         run: |
-          git remote set-url origin https://github-actions:${{ env.GH_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://github-actions:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
           git config user.email ${{ env.GITHUB_MAIL }}
           git config user.name ${{ env.GITHUB_NAME }}
           cd manifests/app1
-          yq -r '.properties.template.containers[0].image|="${{ env.image_name }}:${{ github.event.client_payload.sha_short }}"' dev1.yml > tmp && mv tmp dev1.yml
+          yq -r '.properties.template.containers[0].image|="${{ secrets.ACR_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.event.client_payload.sha_short }}"' ${{ matrix.value }}.yml > tmp && mv tmp ${{ matrix.value }}.yml
           git add .
           git commit -m "Update container image to ${{ github.event.client_payload.sha_short }}"
           git push origin ${{ env.head_branch }}
@@ -53,6 +63,6 @@ jobs:
           gh pr create \
             --base main \
             --head ${{ env.head_branch }} \
-            --title "Update container image to ${{ github.event.client_payload.sha_short }}" \
+            --title "Update ${{ matrix.value }} container image to ${{ github.event.client_payload.sha_short }}" \
             --fill
           
