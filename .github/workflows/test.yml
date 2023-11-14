@@ -18,8 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - id: matrix
         run: |
-          env_list=$(curl --location https://api.github.com/repos/masashiyonekawa/containerapps-cicd-manifest/environments --header 'Authorization: Bearer ${{ secrets.GH_TOKEN }}' | jq -r .environments[].name)
-          echo environments=$(echo $env_list | jq -c .) >> $GITHUB_OUTPUT
+          environments=$(curl --location https://api.github.com/repos/masashiyonekawa/containerapps-cicd-manifest/environments --header 'Authorization: Bearer ${{ secrets.GH_TOKEN }}' | jq -r .environments[].name) >> $GITHUB_OUTPUT
 
   do_process:
     runs-on: ubuntu-latest
