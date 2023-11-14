@@ -30,4 +30,4 @@ jobs:
     steps:
       - name: Processing for each environment
         run: |
-        echo ${{ matrix.value }}
+          echo ${{ matrix.value }}
