@@ -57,9 +57,8 @@ jobs:
         id: get_ca_fqdn
         run: |
           h=$(az containerapp show \
-            --resource-group ${{ vars.RESOURCE_GROUP_NAME }} \
-            --name ${{ vars.CONTAINER_APP_NAME }} \
-            --query properties.configuration.ingress.fqdn \
-            | tr -d '"'
-          )
+                --resource-group ${{ vars.RESOURCE_GROUP_NAME }} \
+                --name ${{ vars.CONTAINER_APP_NAME }} \
+                --query properties.configuration.ingress.fqdn \
+              | tr -d '"')
           echo ca_fqdn=$h >> $GITHUB_OUTPUT
