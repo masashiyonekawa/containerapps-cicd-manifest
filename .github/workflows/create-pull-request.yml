@@ -30,6 +30,10 @@ jobs:
       matrix:
         value: ${{ fromJson(needs.get_env_matrix.outputs.matrix) }}
 
+    env:
+      GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
+      GITHUB_NAME: github-actions[bot]
+
     steps:
       - uses: actions/checkout@v4
 
