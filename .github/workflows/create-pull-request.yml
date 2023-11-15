@@ -70,7 +70,7 @@ jobs:
                             -H "Accept: application/vnd.github+json" \
                             -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
                             https://api.github.com/repos/${{ github.repository }}/pulls \
-                            -d '{"title": "Update ${{ matrix.value }} container image to ${{ github.event.client_payload.sha_short }}", "head": "${{ env.head_branch }}", "base": "main"}' \
+                            -d '{"title": "Update ${{ matrix.value }} container image to ${{ github.event.client_payload.sha_short }}", "body": "${{ github.event.client_payload.commit }}", "head": "${{ env.head_branch }}", "base": "main"}' \
                           | jq -r .number) >> $GITHUB_OUTPUT
 
       - name: Merge pull request (only dev)
