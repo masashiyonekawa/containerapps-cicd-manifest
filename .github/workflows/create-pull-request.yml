@@ -80,7 +80,7 @@ jobs:
         if: ${{ startsWith(matrix.value, 'dev') }}
         run: |
           curl -L \
-            -x PUT \
+            -X PUT \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
             https://api.github.com/repos/${{ github.repository }}/pulls/${{ env.pr_number }}/merge \
